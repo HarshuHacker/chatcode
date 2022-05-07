@@ -4,10 +4,10 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { fetchPosts } from '../actions/posts';
-import { Home, Navbar, Page404, Login, Signup } from './';
+import { Home, Navbar, Login, Signup } from './';
 
 // import { Home, Navbar } from './';
-// import {Page404} from "./Page404"
+import Page404 from "./Page404"
 
 // Dummy component to understand routing in react
 // const Login = () => <div>Login</div>
