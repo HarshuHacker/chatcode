@@ -1,13 +1,15 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import React from "react";
+import { connect } from "react-redux";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import PropTypes from "prop-types";
 
-import { fetchPosts } from '../actions/posts';
-import { Home, Navbar, Login, Signup } from './';
+import { fetchPosts } from "../actions/posts";
+import { Home, Navbar, Login, Signup } from "./";
 
 // import { Home, Navbar } from './';
-import Page404 from "./Page404"
+import Page404 from "./Page404";
+import jwt_decode from "jwt-decode";
+import { authenticateUser } from "../actions/auth";
 
 // Dummy component to understand routing in react
 // const Login = () => <div>Login</div>
@@ -23,6 +25,20 @@ class App extends React.Component {
   componentDidMount() {
     // Fetch the posts through API call
     this.props.dispatch(fetchPosts());
+
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      const user = jwt_decode(token);
+      console.log("user : ", user);
+      this.props.dispatch(
+        authenticateUser({
+          email: user.email,
+          _id: user._id,
+          name: user.name,
+        })
+      );
+    }
   }
 
   render() {
@@ -33,16 +49,17 @@ class App extends React.Component {
           <Navbar />
 
           <Switch>
-            <Route 
-              exact 
-              path="/" render={(props) => {
-                return <Home {...props} posts={posts}/>
-              }}/>
+            <Route
+              exact
+              path="/"
+              render={(props) => {
+                return <Home {...props} posts={posts} />;
+              }}
+            />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
-            <Route component={Page404}/>
+            <Route component={Page404} />
           </Switch>
-
         </div>
       </Router>
     );
