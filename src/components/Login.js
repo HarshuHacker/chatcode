@@ -22,7 +22,6 @@ class Login extends Component {
     e.preventDefault();
     // console.log("this.emailImputRef : ", this.emailImputRef)
     // console.log("this.passwordImputRef : ", this.passwordImputRef)
-    console.log("this.state : ", this.state);
     const { email, password } = this.state;
 
     if (email && password) {
@@ -47,7 +46,6 @@ class Login extends Component {
   render() {
     const { error, inProgress, isLoggedin } = this.props.auth;
     const {from} = this.props.location.state || {from: {pathname: "/"}}
-    console.log("Issue : ", this.props)
     if (isLoggedin) {
       return <Redirect to={from} />
     }

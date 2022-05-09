@@ -5,22 +5,11 @@ import PropTypes from "prop-types";
 
 import { fetchPosts } from "../actions/posts";
 import { Home, Navbar, Login, Signup, Settings } from "./";
-
-// import { Home, Navbar } from './';
 import Page404 from "./Page404";
 import jwt_decode from "jwt-decode";
 import { authenticateUser } from "../actions/auth";
 import { Redirect } from "react-router-dom";
-
-// Dummy component to understand routing in react
-// const Login = () => <div>Login</div>
-// const Login = (props) => {
-//   console.log("Props : ",props)
-//   return (
-//     <div>Login</div>
-//   )
-// }
-// const Signup = () => <div>Signup</div>;
+import { getAuthTokenFromLocalStorage } from "../helpers/utils";
 
 const PrivateRoute = (privateRouteProps) => {
   const { isLoggedin, path, component: Component } = privateRouteProps;
@@ -51,11 +40,10 @@ class App extends React.Component {
     // Fetch the posts through API call
     this.props.dispatch(fetchPosts());
 
-    const token = localStorage.getItem("token");
+    const token = getAuthTokenFromLocalStorage();
 
     if (token) {
       const user = jwt_decode(token);
-      console.log("user : ", user);
       this.props.dispatch(
         authenticateUser({
           email: user.email,
