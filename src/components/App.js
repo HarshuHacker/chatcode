@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import { fetchPosts } from "../actions/posts";
-import { Home, Navbar, Login, Signup } from "./";
+import { Home, Navbar, Login, Signup, Settings } from "./";
 
 // import { Home, Navbar } from './';
 import Page404 from "./Page404";
@@ -21,11 +21,6 @@ import { Redirect } from "react-router-dom";
 //   )
 // }
 // const Signup = () => <div>Signup</div>;
-const Settings = () => (
-  <div>
-    <h1>Settings</h1>
-  </div>
-);
 
 const PrivateRoute = (privateRouteProps) => {
   const { isLoggedin, path, component: Component } = privateRouteProps;
