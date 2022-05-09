@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logoutUser } from "../actions/auth";
+import Icon from "../assets/Images/Icon.png"
 
 class Navbar extends Component {
   logOut = () => {
@@ -15,7 +16,9 @@ class Navbar extends Component {
         <div className="left-div">
           <Link to="/">
             <img
-              src="https://ninjasfiles.s3.amazonaws.com/0000000000003454.png"
+              src={Icon}
+              height="50px"
+              width="207px"
               alt="logo"
             />
           </Link>
