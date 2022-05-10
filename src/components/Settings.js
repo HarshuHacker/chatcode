@@ -33,7 +33,6 @@ class Settings extends Component {
   render() {
     const { user, error } = this.props.auth;
     const { editMode } = this.state;
-    console.log("Auth : ", this.props.auth);
     return (
       <div className="settings">
         <div className="img-container">

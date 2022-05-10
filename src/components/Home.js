@@ -15,16 +15,4 @@ class Home extends Component {
   }
 }
 
-// function mapStateToProps(state) {
-//   return {
-//     posts: state.posts,
-//   };
-// }
-
-// Home.propTypes = {
-//   posts: PropTypes.array.isRequired,
-// };
-
-// export default connect(mapStateToProps)(Home);
-
 export default Home;

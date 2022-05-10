@@ -8,5 +8,5 @@ export default combineReducers({
   posts,
   auth,
   profile,
-  friends
+  friends,
 });

@@ -1,13 +1,97 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { addFriend, removeFriend } from "../actions/friends.js";
 import { fetchUserProfile } from "../actions/profile.js";
+import { APIUrls } from "../helpers/urls.js";
+import { getAuthTokenFromLocalStorage } from "../helpers/utils.js";
 
 class UserProfile extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      success: null,
+      error: null,
+      successMessage: null
+    };
+  }
   componentDidMount() {
     const { match } = this.props;
     if (match.params.userId) {
       // dispatch an action
       this.props.dispatch(fetchUserProfile(match.params.userId));
+    }
+  }
+
+  checkIfUserIsAFriend = () => {
+    console.log("this.props : ", this.props);
+    const { match, friends } = this.props;
+    const userId = match.params.userId;
+
+    const index = friends.map((friend) => friend.to_user._id).indexOf(userId);
+
+    if (index !== -1) {
+      return true;
+    }
+    return false;
+  };
+
+  handleAddFriendClick = async () => {
+    const userId = this.props.match.params.userId;
+    const url = APIUrls.addFriend(userId);
+
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Bearer ${getAuthTokenFromLocalStorage()}`,
+      },
+    };
+
+    const response = await fetch(url, options);
+    const data = await response.json();
+
+    if (data.success) {
+      this.setState({
+        success: true,
+        successMessage: "Added Friend Successfully"
+      });
+
+      this.props.dispatch(addFriend(data.data.friendship));
+    } else {
+      this.setState({
+        success: null,
+        error: data.message,
+      });
+    }
+  };
+
+  handleRemoveFriendClick = async() => {
+    const userId = this.props.match.params.userId;
+    const url = APIUrls.removeFriend(userId);
+
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Bearer ${getAuthTokenFromLocalStorage()}`,
+      },
+    };
+
+    const response = await fetch(url, options);
+    const data = await response.json();
+
+    if (data.success) {
+      this.setState({
+        success: true,
+        successMessage: "Removed Friend Successfully"
+      });
+
+      this.props.dispatch(removeFriend(userId));
+    } else {
+      this.setState({
+        success: null,
+        error: data.message,
+      });
     }
   }
 
@@ -22,6 +106,9 @@ class UserProfile extends Component {
     if (profile.inProgress) {
       return <h1>Loading User !!</h1>;
     }
+
+    const isUserAFriend = this.checkIfUserIsAFriend();
+    const { success, error, successMessage } = this.state;
 
     return (
       <div className="settings">
@@ -44,16 +131,33 @@ class UserProfile extends Component {
         </div>
 
         <div className="btn-grp">
-          <button className="button save-btn">Add Friend</button>
+          {isUserAFriend ? (
+            <button className="button save-btn" onClick={this.handleRemoveFriendClick}>UnFriend</button>
+          ) : (
+            <button
+              className="button save-btn"
+              onClick={this.handleAddFriendClick}
+            >
+              Add Friend
+            </button>
+          )}
+
+          {success && (
+            <div className="alert success-dailog">
+              {successMessage}
+            </div>
+          )}
+          {error && <div className="alert error-dailog">{error}</div>}
         </div>
       </div>
     );
   }
 }
 
-function mapStateToProps({ profile }) {
+function mapStateToProps({ profile, friends }) {
   return {
     profile,
+    friends,
   };
 }
 

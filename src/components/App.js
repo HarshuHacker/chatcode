@@ -53,7 +53,7 @@ class App extends React.Component {
         })
       );
 
-      this.props.dispatch(fetchUserFriends())
+      this.props.dispatch(fetchUserFriends());
     }
   }
 
@@ -69,7 +69,14 @@ class App extends React.Component {
               exact
               path="/"
               render={(props) => {
-                return <Home {...props} posts={posts} friends={friends} isLoggedin={auth.isLoggedin} />;
+                return (
+                  <Home
+                    {...props}
+                    posts={posts}
+                    friends={friends}
+                    isLoggedin={auth.isLoggedin}
+                  />
+                );
               }}
             />
             <Route path="/login" component={Login} />
@@ -96,6 +103,7 @@ function mapStateToProps(state) {
   return {
     posts: state.posts,
     auth: state.auth,
+    friends: state.friends,
   };
 }
 
