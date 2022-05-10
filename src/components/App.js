@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import { fetchPosts } from "../actions/posts";
-import { Home, Navbar, Login, Signup, Settings } from "./";
+import { Home, Navbar, Login, Signup, Settings, UserProfile } from "./";
 import Page404 from "./Page404";
 import jwt_decode from "jwt-decode";
 import { authenticateUser } from "../actions/auth";
@@ -74,6 +74,11 @@ class App extends React.Component {
             <PrivateRoute
               path="/settings"
               component={Settings}
+              isLoggedin={auth.isLoggedin}
+            />
+            <PrivateRoute
+              path="/user/:userId"
+              component={UserProfile}
               isLoggedin={auth.isLoggedin}
             />
             <Route component={Page404} />
