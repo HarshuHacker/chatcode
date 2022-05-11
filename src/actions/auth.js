@@ -160,15 +160,15 @@ export function editUser(name, password, confirmPassword, userId) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Data : ", data)
+        console.log("Data : ", data);
         if (data.success) {
           // dispatch action to save user
           // do something
           dispatch(editUserSuccessful(data.data.user));
-          if(data.data.token) {
-            localStorage.setItem("token", data.data.token)
+          if (data.data.token) {
+            localStorage.setItem("token", data.data.token);
           }
-          return
+          return;
         }
         dispatch(editUserFailed(data.message));
       });

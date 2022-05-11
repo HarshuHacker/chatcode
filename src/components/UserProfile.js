@@ -11,7 +11,7 @@ class UserProfile extends Component {
     this.state = {
       success: null,
       error: null,
-      successMessage: null
+      successMessage: null,
     };
   }
   componentDidMount() {
@@ -53,7 +53,7 @@ class UserProfile extends Component {
     if (data.success) {
       this.setState({
         success: true,
-        successMessage: "Added Friend Successfully"
+        successMessage: "Added Friend Successfully",
       });
 
       this.props.dispatch(addFriend(data.data.friendship));
@@ -65,7 +65,7 @@ class UserProfile extends Component {
     }
   };
 
-  handleRemoveFriendClick = async() => {
+  handleRemoveFriendClick = async () => {
     const userId = this.props.match.params.userId;
     const url = APIUrls.removeFriend(userId);
 
@@ -83,7 +83,7 @@ class UserProfile extends Component {
     if (data.success) {
       this.setState({
         success: true,
-        successMessage: "Removed Friend Successfully"
+        successMessage: "Removed Friend Successfully",
       });
 
       this.props.dispatch(removeFriend(userId));
@@ -93,7 +93,7 @@ class UserProfile extends Component {
         error: data.message,
       });
     }
-  }
+  };
 
   render() {
     const {
@@ -132,7 +132,12 @@ class UserProfile extends Component {
 
         <div className="btn-grp">
           {isUserAFriend ? (
-            <button className="button save-btn" onClick={this.handleRemoveFriendClick}>UnFriend</button>
+            <button
+              className="button save-btn"
+              onClick={this.handleRemoveFriendClick}
+            >
+              UnFriend
+            </button>
           ) : (
             <button
               className="button save-btn"
@@ -143,9 +148,7 @@ class UserProfile extends Component {
           )}
 
           {success && (
-            <div className="alert success-dailog">
-              {successMessage}
-            </div>
+            <div className="alert success-dailog">{successMessage}</div>
           )}
           {error && <div className="alert error-dailog">{error}</div>}
         </div>

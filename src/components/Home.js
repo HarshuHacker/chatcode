@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {PostsList, FriendsList} from "./"
+import { PostsList, FriendsList } from "./";
 // import PropTypes from 'prop-types';
 // import { connect } from 'react-redux';
 
@@ -9,7 +9,7 @@ class Home extends Component {
     return (
       <div className="home">
         <PostsList posts={posts} />
-        {isLoggedin && <FriendsList friends={friends}/>}
+        {isLoggedin && <FriendsList friends={friends} />}
       </div>
     );
   }

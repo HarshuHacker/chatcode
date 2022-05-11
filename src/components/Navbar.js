@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logoutUser } from "../actions/auth";
-import Icon from "../assets/Images/Icon.png"
+import Icon from "../assets/Images/Icon.png";
 
 class Navbar extends Component {
   logOut = () => {
@@ -15,12 +15,7 @@ class Navbar extends Component {
       <nav className="nav">
         <div className="left-div">
           <Link to="/">
-            <img
-              src={Icon}
-              height="50px"
-              width="207px"
-              alt="logo"
-            />
+            <img src={Icon} height="50px" width="207px" alt="logo" />
           </Link>
         </div>
         <div className="search-container">

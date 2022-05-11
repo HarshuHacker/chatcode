@@ -15,7 +15,7 @@ class Signup extends Component {
   }
 
   componentWillUnmount() {
-    this.props.dispatch(clearAuthState())
+    this.props.dispatch(clearAuthState());
   }
 
   handleInputChange = (field, value) => {
@@ -37,7 +37,7 @@ class Signup extends Component {
   render() {
     const { inProgress, error, isLoggedin } = this.props.auth;
     if (isLoggedin) {
-      return <Redirect to="/" />
+      return <Redirect to="/" />;
     }
     return (
       <form className="login-form">

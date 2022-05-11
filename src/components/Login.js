@@ -15,9 +15,9 @@ class Login extends Component {
   }
 
   componentWillUnmount() {
-    this.props.dispatch(clearAuthState())
+    this.props.dispatch(clearAuthState());
   }
-  
+
   handleFormSubmit = (e) => {
     e.preventDefault();
     // console.log("this.emailImputRef : ", this.emailImputRef)
@@ -45,9 +45,9 @@ class Login extends Component {
 
   render() {
     const { error, inProgress, isLoggedin } = this.props.auth;
-    const {from} = this.props.location.state || {from: {pathname: "/"}}
+    const { from } = this.props.location.state || { from: { pathname: "/" } };
     if (isLoggedin) {
-      return <Redirect to={from} />
+      return <Redirect to={from} />;
     }
     return (
       <form className="login-form">
