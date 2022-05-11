@@ -2,7 +2,8 @@ import {
   ADD_COMMENT,
   ADD_POST,
   UPDATE_POSTS,
-  UPDATE_POST_LIKE,
+  ADD_POST_LIKE,
+  REMOVE_POST_LIKE,
 } from "../actions/actionTypes";
 
 export default function posts(state = [], action) {
@@ -25,7 +26,7 @@ export default function posts(state = [], action) {
       });
       return newPosts;
 
-    case UPDATE_POST_LIKE:
+    case ADD_POST_LIKE:
       const UpdatedPosts = state.map((post) => {
         if (post._id === action.postId) {
           console.log("action : ", post);
@@ -37,6 +38,20 @@ export default function posts(state = [], action) {
         return post;
       });
       return UpdatedPosts;
+
+    case REMOVE_POST_LIKE:
+      const updatedPost = state.map((post) => {
+        if (post._id === action.postId) {
+          const likesArray = post.likes.filter((id) => id !== action.userId);
+          return {
+            ...post,
+            likes: likesArray,
+          };
+        }
+
+        return post;
+      });
+      return updatedPost;
 
     default:
       return state;

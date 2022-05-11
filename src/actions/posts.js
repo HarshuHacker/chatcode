@@ -4,22 +4,9 @@ import {
   ADD_COMMENT,
   ADD_POST,
   UPDATE_POSTS,
-  UPDATE_POST_LIKE,
+  ADD_POST_LIKE,
+  REMOVE_POST_LIKE,
 } from "./actionTypes";
-
-export function fetchPosts() {
-  return (dispatch) => {
-    const url = APIUrls.fetchPosts();
-    fetch(url)
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-        dispatch(updatePosts(data.data.posts));
-      });
-  };
-}
 
 export function updatePosts(posts) {
   return {
@@ -43,11 +30,33 @@ export function addComment(comment, postId) {
   };
 }
 
-export function addLikeToStore(postId, userId) {
+export function addPostLikeToStore(postId, userId) {
   return {
-    type: UPDATE_POST_LIKE,
+    type: ADD_POST_LIKE,
     postId,
     userId,
+  };
+}
+
+export function removePostLikeToStore(postId, userId) {
+  return {
+    type: REMOVE_POST_LIKE,
+    postId,
+    userId,
+  };
+}
+
+export function fetchPosts() {
+  return (dispatch) => {
+    const url = APIUrls.fetchPosts();
+    fetch(url)
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        dispatch(updatePosts(data.data.posts));
+      });
   };
 }
 
@@ -107,8 +116,10 @@ export function addLike(id, likeType, userId) {
       .then((data) => {
         console.log("LIKE DATA", data);
 
-        if (data.success) {
-          dispatch(addLikeToStore(id, userId));
+        if (data.success && !data.data.deleted) {
+          dispatch(addPostLikeToStore(id, userId));
+        } else {
+          dispatch(removePostLikeToStore(id, userId));
         }
       });
   };

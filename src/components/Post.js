@@ -42,7 +42,7 @@ class Post extends Component {
     const { post, user } = this.props;
     const { comment } = this.state;
 
-    const IsPostLikesByUser = post.likes.includes(user.id);
+    const IsPostLikedByUser = post.likes.includes(user.id);
 
     return (
       <div className="post-wrapper">
@@ -63,9 +63,9 @@ class Post extends Component {
 
           <div className="post-actions">
             <button className="post-like no-btn" onClick={this.handlePostLike}>
-              {IsPostLikesByUser ? (
+              {IsPostLikedByUser ? (
                 <img
-                  src="https://cdn-icons-png.flaticon.com/512/126/126473.png"
+                  src="https://cdn-icons-png.flaticon.com/512/456/456115.png"
                   alt="like-post"
                 />
               ) : (
