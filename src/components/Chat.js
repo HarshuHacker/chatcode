@@ -11,7 +11,7 @@ class Chat extends Component {
       messages: [], // {content: 'some message', self: true}
       typedMessage: "",
     };
-    this.socket = io.connect("https://codeial.codingninjas.com:5000");
+    this.socket = io.connect("https://54.237.158.65:9000");
     this.userEmail = props.user.email;
 
     if (this.userEmail) {
@@ -28,7 +28,7 @@ class Chat extends Component {
 
       socketConnection.emit("join_room", {
         user_email: this.userEmail,
-        chatroom: "chatcode",
+        chatroom: "codeial",
       });
 
       socketConnection.on("user_joined", function (data) {
@@ -60,7 +60,7 @@ class Chat extends Component {
       this.socket.emit("send_message", {
         message: typedMessage,
         user_email: this.userEmail,
-        chatroom: "chatcode",
+        chatroom: "codeial",
       });
     }
   };
@@ -73,7 +73,7 @@ class Chat extends Component {
         <div className="chat-header">
           Chat
           <img
-            src="https://www.iconsdb.com/icons/preview/white/minus-5-xxl.png"
+            src="https://www.iplt20.com/assets/images/ipl-logo-new-old.png"
             alt=""
             height={17}
           />

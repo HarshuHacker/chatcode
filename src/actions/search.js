@@ -16,8 +16,9 @@ export function searchUsers(searchText) {
         console.log("SEARCH DATA : ", data);
         if (data.success) {
           dispatch(searchResultsSuccess(data.data.users));
+        } else {
+          dispatch(searchResultsSuccess([]));
         }
-        dispatch(searchResultsSuccess([]));
       });
   };
 }
