@@ -13,7 +13,6 @@ export function searchUsers(searchText) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("SEARCH DATA : ", data);
         if (data.success) {
           dispatch(searchResultsSuccess(data.data.users));
         } else {

@@ -160,7 +160,6 @@ export function editUser(name, password, confirmPassword, userId) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Data : ", data);
         if (data.success) {
           // dispatch action to save user
           // do something

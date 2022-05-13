@@ -54,7 +54,6 @@ export function fetchPosts() {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
         dispatch(updatePosts(data.data.posts));
       });
   };
@@ -114,8 +113,6 @@ export function addLike(id, likeType, userId) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("LIKE DATA", data);
-
         if (data.success && !data.data.deleted) {
           dispatch(addPostLikeToStore(id, userId));
         } else {

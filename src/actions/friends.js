@@ -17,7 +17,6 @@ export function fetchUserFriends(userId) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("data", data);
         dispatch(fetchFriendsSuccess(data.data.friends));
       });
   };

@@ -26,33 +26,46 @@ class Navbar extends Component {
             <img src={Icon} height="50px" width="207px" alt="logo" />
           </Link>
         </div>
-        <div className="search-container">
-          <img
-            className="search-icon"
-            src="https://cdn-icons-png.flaticon.com/512/751/751463.png"
-            alt="search-icon"
-          />
+        <abbr
+          title={auth.isLoggedin ? "" : "Login First"}
+          style={{ textDecoration: "none" }}
+        >
+          <div className="search-container">
+            <img
+              className="search-icon"
+              src="https://cdn-icons-png.flaticon.com/512/751/751463.png"
+              alt="search-icon"
+            />
 
-          <input placeholder="Search" onChange={this.handleSearch} />
+            {auth.isLoggedin ? (
+              <input placeholder="Search" onChange={this.handleSearch} />
+            ) : (
+              <input
+                disabled
+                placeholder="Search"
+                onChange={this.handleSearch}
+              ></input>
+            )}
 
-          {results.length > 0 && (
-            <div className="search-results">
-              <ul>
-                {results.map((user) => (
-                  <Link to={`/user/${user._id}`} key={user._id}>
-                    <li className="search-results-row">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1864/1864509.png"
-                        alt="user-dp"
-                      />
-                      <span>{user.name}</span>
-                    </li>
-                  </Link>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
+            {results.length > 0 && (
+              <div className="search-results">
+                <ul>
+                  {results.map((user) => (
+                    <Link to={`/user/${user._id}`} key={user._id}>
+                      <li className="search-results-row">
+                        <img
+                          src="https://cdn-icons-png.flaticon.com/512/1864/1864509.png"
+                          alt="user-dp"
+                        />
+                        <span>{user.name}</span>
+                      </li>
+                    </Link>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </abbr>
         <div className="right-nav">
           {auth.isLoggedin && (
             <div className="user">
