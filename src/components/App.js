@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import { fetchPosts } from "../actions/posts";
@@ -8,32 +8,44 @@ import { Home, Navbar, Login, Signup, Settings, UserProfile } from "./";
 import Page404 from "./Page404";
 import jwt_decode from "jwt-decode";
 import { authenticateUser } from "../actions/auth";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { getAuthTokenFromLocalStorage } from "../helpers/utils";
 import { fetchUserFriends } from "../actions/friends";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const PrivateRoute = (privateRouteProps) => {
-  const { isLoggedin, path, component: Component } = privateRouteProps;
+const PrivateRoute = ({ children, isLoggedin }) => {
+  const state = useLocation();
+  const navigate = useNavigate();
+  console.log("STATE : ", state);
+  // const { isLoggedin, path, component: Component } = privateRouteProps;
 
-  return (
-    <Route
-      path={path}
-      render={(props) => {
-        return isLoggedin ? (
-          <Component {...props} />
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/login",
-              state: {
-                from: props.location,
-              },
-            }}
-          />
-        );
-      }}
-    />
-  );
+  // return (
+  //   <Route
+  //     path={path}
+  //     render={(props) => {
+  //       return isLoggedin ? (
+  //         <Component {...props} />
+  //       ) : (
+  //         <Navigate
+  //           to={{
+  //             pathname: "/login",
+  //             state: {
+  //               from: props.location,
+  //             },
+  //           }}
+  //         />
+  //       );
+  //     }}
+  //   />
+  // );
+
+  return isLoggedin
+    ? children
+    : navigate("/login", {
+        state,
+      });
+
+  // return isLoggedin ? children : <Navigate to={"/login"}/>
 };
 
 class App extends React.Component {
@@ -64,8 +76,8 @@ class App extends React.Component {
         <div>
           <Navbar />
 
-          <Switch>
-            <Route
+          <Routes>
+            {/* <Route
               exact
               path="/"
               render={(props) => {
@@ -78,21 +90,51 @@ class App extends React.Component {
                   />
                 );
               }}
+            /> */}
+            <Route
+              path="/"
+              element={
+                <Home
+                  posts={posts}
+                  friends={friends}
+                  isLoggedin={auth.isLoggedin}
+                />
+              }
             />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
-            <PrivateRoute
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            {/* <PrivateRoute
               path="/settings"
-              component={Settings}
+              element={<Settings/>}
               isLoggedin={auth.isLoggedin}
+            /> */}
+            <Route
+              path="/settings"
+              element={
+                <PrivateRoute isLoggedin={auth.isLoggedin}>
+                  {" "}
+                  <Settings />{" "}
+                </PrivateRoute>
+              }
             />
-            <PrivateRoute
+
+            <Route
               path="/user/:userId"
-              component={UserProfile}
-              isLoggedin={auth.isLoggedin}
+              element={
+                <PrivateRoute isLoggedin={auth.isLoggedin}>
+                  {" "}
+                  <UserProfile />{" "}
+                </PrivateRoute>
+              }
             />
-            <Route component={Page404} />
-          </Switch>
+
+            {/* <PrivateRoute
+              path="/user/:userId"
+              element={<UserProfile/>}
+              isLoggedin={auth.isLoggedin}
+            /> */}
+            <Route element={<Page404 />} />
+          </Routes>
         </div>
       </Router>
     );
