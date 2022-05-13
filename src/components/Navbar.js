@@ -32,21 +32,21 @@ class Navbar extends Component {
             src="https://cdn-icons-png.flaticon.com/512/751/751463.png"
             alt="search-icon"
           />
-          
+
           <input placeholder="Search" onChange={this.handleSearch} />
 
           {results.length > 0 && (
             <div className="search-results">
               <ul>
                 {results.map((user) => (
-                  <Link to={`/user/${user._id}`}>
-                    <li className="search-results-row" key={user._id}>
+                  <Link to={`/user/${user._id}`} key={user._id}>
+                    <li className="search-results-row">
                       <img
                         src="https://cdn-icons-png.flaticon.com/512/1864/1864509.png"
                         alt="user-dp"
                       />
                       <span>{user.name}</span>
-                  </li>
+                    </li>
                   </Link>
                 ))}
               </ul>
